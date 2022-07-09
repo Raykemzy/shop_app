@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:shop_app/models/cart_item.dart';
 
 class Cart with ChangeNotifier {
-  final Map<String, CartItem> _items = {};
+  Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items => {..._items};
 
@@ -43,6 +43,11 @@ class Cart with ChangeNotifier {
 
   void removeItem(String id) {
     _items.remove(id);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _items = {};
     notifyListeners();
   }
 }

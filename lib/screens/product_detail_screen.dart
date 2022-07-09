@@ -13,7 +13,19 @@ class ProdDetailsScreen extends StatelessWidget {
     final loadedProd = model.findById(productId);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColorDark,
         title: Text(loadedProd.title),
+      ),
+      body: Column(
+        children: [
+          SizedBox(
+            width: 200,
+            height: 300,
+            child: Image.network(loadedProd.imageUrl),
+          ),
+          Text(loadedProd.desc),
+          Text('\$${loadedProd.price}'),
+        ],
       ),
     );
   }

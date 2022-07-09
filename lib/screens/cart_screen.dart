@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/order.dart';
 
 import '../providers/cart.dart';
 
@@ -31,7 +32,26 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     const Text('Total'),
                     const SizedBox(width: 20),
-                    Chip(label: Text('${cart.itemTotal}'))
+                    Chip(label: Text('${cart.itemTotal}')),
+                    const Spacer(),
+                    InkWell(
+                      onTap: () {
+                        final order =
+                            Provider.of<Order>(context, listen: false);
+                        order.addOrder(
+                          cart.items.values.toList(),
+                          cart.itemTotal,
+                        );
+                        cart.clearCart();
+                      },
+                      child: const Text(
+                        'Order',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -45,7 +65,6 @@ class _CartScreenState extends State<CartScreen> {
                 return Dismissible(
                   key: ValueKey(cart.items.keys.toList()[i]),
                   onDismissed: (direction) {
-                    //if(direction == DismissDirection.endToStart){}
                     cart.removeItem(cart.items.keys.toList()[i]);
                   },
                   background: Container(
