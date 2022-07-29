@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_app/models/product.dart';
@@ -35,8 +33,21 @@ class _ProductItemState extends State<ProductItem> {
             trailing: IconButton(
                 onPressed: () {
                   cartModel.addItem(model.id, model.title, model.price);
-                  log('${cartModel.items.values.first}');
-                  log('${cartModel.items.length}');
+                  final s = ScaffoldMessenger.of(context);
+                  s.hideCurrentSnackBar();
+                  s.showSnackBar(
+                    SnackBar(
+                      duration: const Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'UNDO',
+                        textColor: Colors.red,
+                        onPressed: () {
+                          cartModel.removeSingleItem(model.id);
+                        },
+                      ),
+                      content: const Text('Item added to cart'),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.shopping_cart)),
           ),

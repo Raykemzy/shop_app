@@ -67,6 +67,28 @@ class _CartScreenState extends State<CartScreen> {
                   onDismissed: (direction) {
                     cart.removeItem(cart.items.keys.toList()[i]);
                   },
+                  confirmDismiss: (direction) => showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Are you sure?"),
+                      content: const Text(
+                          "Do you want to remove this item from cart?"),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: const Text('No'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                          child: const Text('Yes'),
+                        )
+                      ],
+                    ),
+                  ),
                   background: Container(
                     color: Colors.red,
                     alignment: Alignment.centerRight,
